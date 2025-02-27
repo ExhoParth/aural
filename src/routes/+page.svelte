@@ -42,6 +42,8 @@
     <h3>Elements</h3>
     <div class="draggable" draggable="true" on:dragstart={(e) => handleDragStart(e, 'A')}>Node A</div>
     <div class="draggable" draggable="true" on:dragstart={(e) => handleDragStart(e, 'B')}>Node B</div>
+    <!-- <div class="draggable" draggable="true" role="button" tabindex="0" on:dragstart={(e) => handleDragStart(e, 'B')}>Node A</div> -->
+    <!-- <div class="draggable" draggable="true" role="button" tabindex="0" on:dragstart={(e) => handleDragStart(e, 'B')}>Node B</div> -->
   </aside>
 
   <!-- Flow Area (Drop Target) -->
@@ -51,6 +53,12 @@
       <Controls />
     </SvelteFlow>
   </section>
+  <!-- <section class="flow-area" role="region" on:drop={handleDrop} on:dragover={allowDrop}>
+    <SvelteFlow {nodes} {edges}>
+      <Background bgColor="rgba(255,255,255,0.25)" patternColor="red" />
+      <Controls />
+    </SvelteFlow>
+  </section> -->
 </main>
 
 <style>
