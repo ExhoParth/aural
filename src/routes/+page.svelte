@@ -2,6 +2,7 @@
   import { writable } from 'svelte/store';
   import { SvelteFlow, Background, Controls } from '@xyflow/svelte';
   import '@xyflow/svelte/dist/style.css';
+  import AudioInputNode from './AudioInputNode.svelte';
 
   // Store for nodes and edges
   const nodes = writable([]);
@@ -32,22 +33,31 @@
       y: event.clientY - flowArea.top
     };
 
-    nodes.update(n => [...n, { id: `${nodeIdCounter++}`, position, data: { label: type } }]);
+    nodes.update(n => [...n, { 
+      id: `${nodeIdCounter++}`, 
+      position, 
+      type: 'audioInput',
+      data: { label: type } 
+    }]);
   }
+
+  // Custom node types
+  const nodeTypes = {
+    audioInput: AudioInputNode,
+  };
 </script>
 
 <main>
   <!-- Left Panel for Dragging Elements -->
   <aside class="sidebar">
     <h3>Elements</h3>
-    <div class="draggable" draggable="true" on:dragstart={(e) => handleDragStart(e, 'A')}>Node A</div>
-    <div class="draggable" draggable="true" on:dragstart={(e) => handleDragStart(e, 'B')}>Node B</div>
+    <div class="draggable" draggable="true" on:dragstart={(e) => handleDragStart(e, 'Audio Input')}>Audio Input</div>
   </aside>
 
   <!-- Flow Area (Drop Target) -->
   <section class="flow-area" on:drop={handleDrop} on:dragover={allowDrop}>
-    <SvelteFlow {nodes} {edges}>
-      <Background bgColor="rgba(255,255,255,0.25)" patternColor="red" />
+    <SvelteFlow {nodes} {edges} {nodeTypes}>
+      <Background bgColor="rgba(255,255,255,0.25)" patternColor="#007bff" />
       <Controls />
     </SvelteFlow>
   </section>
@@ -76,6 +86,11 @@
     text-align: center;
     border-radius: 5px;
     cursor: grab;
+    transition: background-color 0.3s ease;
+  }
+
+  .draggable:hover {
+    background: #0056b3;
   }
 
   .flow-area {
